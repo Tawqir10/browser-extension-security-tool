@@ -46,32 +46,20 @@ scripts.forEach(script => {
 
 
 
-
-// Phishing detection using a dummy list for testing
-
 // Extract hostname from current page
 const pageHost = window.location.hostname;
 
-// Simulated phishing domain list for testing
-const mockPhishingData = [
-  { url: "https://www.bbc.co.uk" },
-  { url: "https://bbc.co.uk" }
-];
+// Known Phishing domains
+const knownPhishingDomains = [];
+// Here is where an API would be called that would hold a database with known phishing sites
 
-// Check if the current hostname matches any mock phishing domain
-const isPhishing = mockPhishingData.some(entry => {
-  try {
-    const phishingHost = new URL(entry.url).hostname;
-    return phishingHost === pageHost;
-  } catch (err) {
-    return false;
-  }
-});
-
+// Check if the current hostname is a known phishing domain
+const isPhishing = knownPhishingDomains.includes(pageHost);
 if (isPhishing) {
-  chrome.runtime.sendMessage({
-    type: "phishingDetected",
-    url: window.location.href,
-    details: `Phishing domain detected (mock): ${pageHost}`
-  });
-}
+    chrome.runtime.sendMessage({
+      type: "phishingDetected",
+      url: window.location.href,
+      details: `Phishing domain detected: ${pageHost}`
+    });
+  }
+

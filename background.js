@@ -31,15 +31,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       // Save the updated list of logs
       chrome.storage.local.set({ threatLogs: updatedLogs });
     });
-  }
-});
-
-
-
-// Listener for phishing domain detection (FR-05)
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === "phishingDetected") {
-    console.log("Phishing alert:", message.details);
+  } else if(message.type === "phishingDetected"){
+      console.log("Phishing alert:", message.details);
 
     chrome.notifications.create({
       type: "basic",
@@ -49,7 +42,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       priority: 2
     });
 
-    // Log phishing detection (FR-06)
     chrome.storage.local.get({ threatLogs: [] }, (data) => {
       const updatedLogs = data.threatLogs;
       updatedLogs.push({
@@ -58,9 +50,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         details: message.details
       });
       chrome.storage.local.set({ threatLogs: updatedLogs });
-    });
+  });
   }
 });
+
+
+
+
 
 // Risk Scoring Function
 function calculateRiskScore(permissions) {

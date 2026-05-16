@@ -21,12 +21,24 @@ document.addEventListener("DOMContentLoaded", () => {
       const div = document.createElement("div");
       div.className = "log-entry";
 
-      // Insert the log's time, URL, and specific details in HTML format
-      div.innerHTML = `
-        <strong>Time:</strong> ${log.time}<br />
-        <strong>URL:</strong> ${log.url}<br />
-        <strong>Details:</strong> ${log.details}
-      `;
+      //Using DOM methods to build log entries
+      const logTime = document.createElement("strong");
+      logTime.textContent = "Time: ";
+      div.appendChild(logTime);
+      div.appendChild(document.createTextNode(log.time));
+      div.appendChild(document.createElement("br"));
+      
+      const logUrl = document.createElement("strong");
+      logUrl.textContent = "Url: ";
+      div.appendChild(logUrl);
+      div.appendChild(document.createTextNode(log.url));
+      div.appendChild(document.createElement("br"));
+      
+      const logDetails = document.createElement("strong");
+      logDetails.textContent = "Details: ";
+      div.appendChild(logDetails);
+      div.appendChild(document.createTextNode(log.details));
+      div.appendChild(document.createElement("br"));
 
       // Add the newly created div to the main container on the page
       logContainer.appendChild(div);
