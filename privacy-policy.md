@@ -1,7 +1,7 @@
-# Privacy Policy for browser-extension-template
+# Privacy Policy for Browser Security Shield
 
-No data or personal information is collected by browser-extension-template.
+No data or personal information is collected, transmitted, or shared by this extension. All threat logs are stored locally on your device using chrome.storage.local and never leave your browser.
 
 ##### Contact
 
-If you have any questions or suggestions regarding this privacy policy, do not hesitate to [contact us](https://github.com/fregante/browser-extension-template/issues/new).
+For any questions, open an issue on the GitHub repository.

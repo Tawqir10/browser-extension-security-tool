@@ -1,46 +1,38 @@
-// When the options page has fully loaded, run this function
 document.addEventListener("DOMContentLoaded", () => {
-  // Get a reference to the container where we'll display the logs
   const logContainer = document.getElementById("logs");
 
-  // Retrieve the stored threat logs from Chrome's local storage
   chrome.storage.local.get({ threatLogs: [] }, (data) => {
     const logs = data.threatLogs;
 
-    // If there are no logs, display a simple message to the user
     if (logs.length === 0) {
       logContainer.textContent = "No logs available.";
       return;
     }
 
-    // Clear any existing content in the container (just in case)
     logContainer.innerHTML = "";
 
-    // For each log entry, create a new <div> to display the details
     logs.forEach((log) => {
       const div = document.createElement("div");
       div.className = "log-entry";
 
-      //Using DOM methods to build log entries
       const logTime = document.createElement("strong");
       logTime.textContent = "Time: ";
       div.appendChild(logTime);
       div.appendChild(document.createTextNode(log.time));
       div.appendChild(document.createElement("br"));
-      
+
       const logUrl = document.createElement("strong");
       logUrl.textContent = "Url: ";
       div.appendChild(logUrl);
       div.appendChild(document.createTextNode(log.url));
       div.appendChild(document.createElement("br"));
-      
+
       const logDetails = document.createElement("strong");
       logDetails.textContent = "Details: ";
       div.appendChild(logDetails);
       div.appendChild(document.createTextNode(log.details));
       div.appendChild(document.createElement("br"));
 
-      // Add the newly created div to the main container on the page
       logContainer.appendChild(div);
     });
   });

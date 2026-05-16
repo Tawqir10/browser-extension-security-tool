@@ -1,13 +1,10 @@
 // background.js
 
-// This listener waits for messages sent from the content script (content.js)
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  // Check if the message is about a suspicious script being detected
   if (message.type === "suspiciousScriptDetected") {
     console.log("Suspicious script detected from content.js:", message.details);
 
     // FR-03: Real-Time Security Alerts
-    // Show a notification to the user warning them about a suspicious script
     chrome.notifications.create({
       type: "basic",
       iconUrl: "icon.png",
@@ -17,18 +14,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
 
     // FR-06: Threat Logging
-    // Store details of the detected threat in local storage for future review
     chrome.storage.local.get({ threatLogs: [] }, (data) => {
       const updatedLogs = data.threatLogs;
-
-      // Add the new incident with timestamp, URL, and the script pattern detected
       updatedLogs.push({
         time: new Date().toLocaleString(),
         url: message.url,
         details: message.details
       });
-
-      // Save the updated list of logs
       chrome.storage.local.set({ threatLogs: updatedLogs });
     });
   } else if(message.type === "phishingDetected"){
@@ -94,6 +86,5 @@ chrome.management.getAll(extensions => {
 
     console.log(`Risk score for ${ext.name}: ${score} (${level})`, riskyPerms);
 
-    // Notifications removed
   });
 });
