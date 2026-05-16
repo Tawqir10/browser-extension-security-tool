@@ -1,0 +1,22 @@
+name: Validate Extension
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check manifest.json is valid JSON
+        run: python3 -c "import json, sys; json.load(open('manifest.json')); print('manifest.json is valid')"
+
+      - name: Check required files exist
+        run: |
+          for f in manifest.json background.js content.js popup.js popup.html popup.css options.js options.html options.css icon.png; do
+            [ -f "$f" ] && echo "✓ $f" || (echo "✗ $f missing" && exit 1)
+          done

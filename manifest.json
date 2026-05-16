@@ -1,0 +1,43 @@
+{
+	"name": "Browser Security Shield",
+	"version": "1.0.0",
+	"description": "Detects browser-based threats in real time: suspicious JavaScript execution, phishing domains, and high-risk extensions. Includes threat logging and whitelist/blacklist management.",
+	"manifest_version": 3,
+	"icons": {
+		"128": "icon.png"
+	},
+	"permissions": [
+		"activeTab",
+		"storage",
+		"notifications",
+		"management"
+	],
+	"host_permissions": ["<all_urls>"],
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"action": {
+		"default_popup": "popup.html",
+		"default_icon": {
+			"128": "icon.png"
+		}
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content.js"],
+			"run_at": "document_idle"
+		}
+	],
+	"options_ui": {
+		"page": "options.html",
+		"open_in_tab": true
+	},
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "browser-security-shield@extension",
+			"strict_min_version": "109.0"
+		}
+	}
+}
